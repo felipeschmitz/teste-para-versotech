@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a href="/?pagina=cores&acao=cadastrar">Nova cor</a>
+    <table border='1'>
+        <tr>
+            <th>ID</th>    
+            <th>Nome</th>    
+            <th>Ação</th>    
+        </tr>
+        {% for color in colors %}
+        <tr>
+            <td>{{ color.id }}</td>
+            <td>{{ color.name }}</td>
+            <td>
+                <a href="/?pagina=cores&acao=editar&id={{ color.id }}">Editar</a>
+                <form action="/?pagina=cores&acao=remover" method="POST">
+                    <input type="hidden" name="acao" value="remover">
+                    <input type="hidden" name="id" value="{{ color.id }}">
+                    <button type="submit">Excluir</button>
+                </form>
+                <a href="/?pagina=cores&acao=remover&id={{ color.id }}">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

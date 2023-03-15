@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a href="/?acao=cadastrar">Novo usuário</a>
+    <table border='1'>
+        <tr>
+            <th>ID</th>    
+            <th>Nome</th>    
+            <th>Email</th>
+            <th>Ação</th>    
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                <a href="/?acao=editar&id={{ user.id }}">Editar</a>
+                <form action="/?acao=remover" method="POST">
+                    <input type="hidden" name="acao" value="remover">
+                    <input type="hidden" name="id" value="{{ user.id }}">
+                    <button type="submit">Excluir</button>
+                </form>
+                <a href="/?acao=remover&id={{ user.id }}">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

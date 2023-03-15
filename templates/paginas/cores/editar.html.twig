@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div>
+		<h2>Editar cor "{{ color.name }}"</h2>
+		<a href="/?pagina=cores">Voltar</a>
+	</div>
+	<form action="/?pagina=cores&acao=salvar" method="POST">
+		<div>
+			<label for="name">Nome</label>
+			<input type="text" name="name" id="name" value="{{ color.name }}" required>
+		</div>
+
+		<input type="hidden" name="acao" value="salvar">
+		<input type="hidden" name="id" value="{{ color.id }}">
+
+		<button type="submit">Salvar</button>
+	</form>
+{% endblock %}
