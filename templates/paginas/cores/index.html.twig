@@ -1,27 +1,61 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <a href="/?pagina=cores&acao=cadastrar">Nova cor</a>
-    <table border='1'>
-        <tr>
-            <th>ID</th>    
-            <th>Nome</th>    
-            <th>Ação</th>    
-        </tr>
-        {% for color in colors %}
-        <tr>
-            <td>{{ color.id }}</td>
-            <td>{{ color.name }}</td>
-            <td>
-                <a href="/?pagina=cores&acao=editar&id={{ color.id }}">Editar</a>
-                <form action="/?pagina=cores&acao=remover" method="POST">
-                    <input type="hidden" name="acao" value="remover">
-                    <input type="hidden" name="id" value="{{ color.id }}">
-                    <button type="submit">Excluir</button>
-                </form>
-                <a href="/?pagina=cores&acao=remover&id={{ color.id }}">Excluir</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="w-full py-4">
+            <div class="flex justify-end">
+                <a href="/?pagina=cores&acao=cadastrar" class="px-3 py-2 bg-blue-500 text-blue-100 rounded transition hover:bg-blue-600 hover:text-blue-50">Nova cor</a>
+            </div>
+            <div class="bg-white rounded shadow-lg overflow-x-auto mt-4">
+                <table class="w-full">
+                    <tr class="bg-slate-200">
+                        <th>
+                            <div class="px-3 py-2 text-left text-slate-700">ID</div>
+                        </th>    
+                        <th>
+                            <div class="px-3 py-2 text-left text-slate-700">Nome</div>
+                        </th>    
+                        <th>
+                            <div class="px-3 py-2 text-left text-slate-700">Ação</div>
+                        </th>    
+                    </tr>
+                    {% for color in colors %}
+                    <tr>
+                        <td class="w-1">
+                            <div class="px-3 py-2 text-left">
+                                {{ color.id }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="px-3 py-2 text-left">
+                                {{ color.name }}
+                            </div>
+                        </td>
+                        <td class="w-1">
+                            <div class="flex flex-row items-center justify-center space-x-4 px-3 py-2">
+                                <a href="/?pagina=cores&acao=editar&id={{ color.id }}" class="px-3 py-2 text-xs bg-green-500 text-green-100 rounded transition hover:bg-green-600 hover:text-green-50">Editar</a>
+                                <form action="/?pagina=cores&acao=remover" method="POST" id="remove-{{ color.id }}">
+                                    <input type="hidden" name="acao" value="remover">
+                                    <input type="hidden" name="id" value="{{ color.id }}">
+                                    <a href="/?pagina=cores&acao=remover&id={{ color.id }}" onclick="remove(event, {{ color.id }})" class="px-3 py-2 text-xs bg-red-500 text-red-100 rounded transition hover:bg-red-600 hover:text-red-50">Excluir</a>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+    const remove = (event, id) => {
+        if (confirm('Deseja remover a cor?')) {
+            document.getElementById(`remove-${id}`).submit();
+        }
+        event.preventDefault();
+    }
+    </script>
 {% endblock %}

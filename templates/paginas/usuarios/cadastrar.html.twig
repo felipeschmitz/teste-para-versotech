@@ -1,28 +1,42 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div>
-		<h2>Nova cor</h2>
-		<a href="/?pagina=cores">Voltar</a>
-	</div>
-    <form action="/?acao=cadastro" method="POST">
-        <div>
-            <label for="name">Nome</label>
-            <input type="text" name="name" id="name" required>
-        </div>
-        <div>
-            <label for="name">E-mail</label>
-            <input type="email" name="email" id="email" required>
-        </div>
-        <h3>Cores</h3>
-        {% for color in colors %}
-        <div>
-            <label><input type="checkbox" name="color[]" id="color" value="{{ color.id }}"> {{ color.name }}</label>
-        </div>
-        {% endfor %}
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="w-full py-4">
+            <div class="flex flex-row justify-between items-center">
+                <h2 class="font-semibold text-4xl">Novo usuário</h2>
+                <a href="/" class="px-3 py-2 text-xs bg-red-500 text-red-100 rounded transition hover:bg-red-600 hover:text-red-50">Voltar</a>
+            </div>
+            <div class="bg-white rounded shadow-lg mt-4">
+                <form action="/?acao=cadastro" method="POST">
+                    <div class="flex flex-col space-y-4 p-4">
+                        <div class="flex flex-col">
+                            <label for="name" class="block font-semibold mb-3">Nome</label>
+                            <input type="text" name="name" id="name" class="shadow px-2 py-1 border focus:outline-none focus:ring-0" required>
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="email" class="block font-semibold mb-3">E-mail</label>
+                            <input type="email" name="email" id="email" class="shadow px-2 py-1 border focus:outline-none focus:ring-0" required>
+                        </div>
+                        <div class="flex flex-col">
+                            <h3 class="font-semibold text-3xl mb-4 mt-6">Cores</h3>
+                            {% for color in colors %}
+                            <div>
+                                <label class="flex items-center space-x-2 cursor-pointer"><input type="checkbox" name="color[]" id="color" value="{{ color.id }}" class="w-4 h-4"> 
+                                    <span>{{ color.name }}</span>
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
 
-        <input type="hidden" name="acao" value="cadastro">
+                        <input type="hidden" name="acao" value="cadastro">
 
-        <button type="submit">Cadastrar</button>
-    </form>
+                        <button type="submit" class="px-3 py-2 bg-blue-500 text-blue-100 rounded transition hover:bg-blue-600 hover:text-blue-50">Cadastrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    
 {% endblock %}

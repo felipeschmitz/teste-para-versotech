@@ -1,29 +1,70 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <a href="/?acao=cadastrar">Novo usuário</a>
-    <table border='1'>
-        <tr>
-            <th>ID</th>    
-            <th>Nome</th>    
-            <th>Email</th>
-            <th>Ação</th>    
-        </tr>
-        {% for user in users %}
-        <tr>
-            <td>{{ user.id }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
-            <td>
-                <a href="/?acao=editar&id={{ user.id }}">Editar</a>
-                <form action="/?acao=remover" method="POST">
-                    <input type="hidden" name="acao" value="remover">
-                    <input type="hidden" name="id" value="{{ user.id }}">
-                    <button type="submit">Excluir</button>
-                </form>
-                <a href="/?acao=remover&id={{ user.id }}">Excluir</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="w-full py-4">
+            <div class="flex justify-end">
+                <a href="/?acao=cadastrar" class="px-3 py-2 bg-blue-500 text-blue-100 rounded transition hover:bg-blue-600 hover:text-blue-50">Novo usuário</a>
+            </div>
+            <div class="bg-white rounded shadow-lg overflow-x-auto mt-4">
+                <table class="w-full">
+                    <tr class="bg-slate-200">
+                        <th>
+                            <div class="px-3 py-2 text-left text-slate-700">ID</div>
+                        </th>    
+                        <th>
+                            <div class="px-3 py-2 text-left text-slate-700">Nome</div>
+                        </th>    
+                        <th>
+                            <div class="px-3 py-2 text-left text-slate-700">Email</div>
+                        </th>
+                        <th>
+                            <div class="px-3 py-2 text-left text-slate-700">Ação</div>
+                        </th>    
+                    </tr>
+                    {% for user in users %}
+                    <tr>
+                        <td class="w-1">
+                            <div class="px-3 py-2 text-left">
+                                {{ user.id }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="px-3 py-2 text-left">
+                                {{ user.name }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="px-3 py-2 text-left">
+                                {{ user.email }}
+                            </div>
+                        </td>
+                        <td class="w-1">
+                            <div class="flex flex-row space-x-4 px-3 py-2">
+                                <a href="/?acao=editar&id={{ user.id }}" class="px-3 py-2 text-xs bg-green-500 text-green-100 rounded transition hover:bg-green-600 hover:text-green-50">Editar</a>
+                                <form action="/?acao=remover" method="POST" class="inline" id="remove-{{ user.id }}">
+                                    <input type="hidden" name="acao" value="remover">
+                                    <input type="hidden" name="id" value="{{ user.id }}">
+                                    
+                                    <a href="/?acao=remover&id={{ user.id }}" onclick="remove(event, {{ user.id }})" class="px-3 py-2 text-xs bg-red-500 text-red-100 rounded transition hover:bg-red-600 hover:text-red-50">Excluir</a>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+    const remove = (event, id) => {
+        if (confirm('Deseja remover o usuário?')) {
+            document.getElementById(`remove-${id}`).submit();
+        }
+        event.preventDefault();
+    }
+    </script>
 {% endblock %}
